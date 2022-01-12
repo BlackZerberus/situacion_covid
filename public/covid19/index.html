@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto Covid-19</title>
+
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+    <!-- font awesome -->
+    <script defer src="https://kit.fontawesome.com/60aabfff1a.js" crossorigin="anonymous"></script>
+
+    <!-- chartjs -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- script js -->
+    <script defer src="assets/js/scripts.js" type="module"></script>
+    
+
+</head>
+<body>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"><i class="fas fa-virus mx-3"></i>Covid-19</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
+            <ul class="navbar-nav" id="ul-login">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#modal-login" data-bs-toggle="modal" >Login<i class="fas fa-sign-in-alt ms-3"></i></a>
+              </li>
+            </ul>
+            <ul class="navbar-nav" id="ul-logout" hidden>
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" id="situacion-chile" href="#">Situacion Chile<i class="fas fa-chart-line ms-3"></i></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="cerrar-sesion" href="#">Cerrar Sesion<i class="fas fa-sign-out-alt ms-3"></i></a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    
+      <!-- Modal login -->
+<div class="modal fade" id="modal-login" tabindex="-1" aria-labelledby="modal-login" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div id="alert-msg"></div>
+      <div class="modal-header">
+        <h3 class="modal-title" id="login-title">Ingrese sus datos:</h3>       
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form id="form-login">
+          <div class="mb-3">
+            <label for="correo" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="example@domain.com">
+            
+          </div>
+          <div class="mb-3">
+            <label for="clave" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="clave" >
+          </div>
+          
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+        </form>
+       
+      </div>      
+    </div>
+  </div>
+</div>
+
+      <!-- container -->
+      <div class="container">
+        <!-- Encabezado -->
+        <div class="row d-flex justify-content-center mt-3">
+          <div class="col-4">
+            <h1 id="titulo-situacion">Situacion Mundial</h1>
+          </div>
+        </div>
+        <!-- Aquí se renderiza el grafico de Charts.js -->
+          <div class="row d-flex justify-content-center my-3" style="min-height:539px;">               
+            <div class="col-10 border d-flex align-items-center">
+              <!-- animacion preloader css -->
+              <div class="container" id="preloader" hidden>
+                <div class="row d-flex justify-content-end">
+                  <div class="col-5">
+                    <div class="loadingio-spinner-bean-eater-i95nt3z3rlr"><div class="ldio-qn6isj1edgm">
+                      <div><div></div><div></div><div></div></div><div><div></div><div></div><div></div></div>
+                      </div></div>
+                  </div>
+                </div>
+                <div class="row d-flex justify-content-end">
+                  <div class="col-6 text-center">
+                    <h2>Obteniendo Datos...</h2>
+                  </div>
+                </div>
+              </div>
+              <!-- --------------------------------------- -->
+              <!-- Graficos -->
+              <canvas id="grafico-paises"></canvas>
+              <canvas id="grafico-chile" hidden></canvas>
+            </div>
+          </div>
+          <!-- Aquí se renderiza la Tabla con todos los datos -->
+          <div class="row d-flex justify-content-center">
+            <div class="col-10 ">
+               
+                <table class="table border my-4" id="tabla-covid">
+                  <thead class="table-dark">
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">País</th>
+                      <th scope="col">Casos activos</th>
+                      <th scope="col">Casos confirmados</th>
+                      <th scope="col">Muertos</th>
+                      <th scope="col">Recuperados</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody id='body-tabla-covid'>                    
+                    
+                    
+                  </tbody>
+                </table>               
+            </div>
+          </div>
+      </div>
+
+<!-- Modal que despliega un grafico individual por pais -->
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="Modal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="nombre-title"></h3>       
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <canvas id="graficos-por-pais"></canvas>
+      </div>      
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
